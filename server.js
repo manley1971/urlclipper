@@ -9,15 +9,33 @@ var mongo = require('mongodb');
 var app = express();
 require('dotenv').load();
 
-app.use('/public', express.static(process.cwd() + '/public'));
 var url = 'mongodb://localhost:27017/';
+app.use('/public', express.static(process.cwd() + '/public'));
 
-app.get('/new/https?\://:url', function(req, res) {
-  console.log(JSON.stringify(req);
+app.get('/new/https\://:url', function(req, res) {
   let retval = {};
   let s = req.params.url;
   retval.id = shortid.generate();
-  retval.original_url = req.params.url;
+  retval.original_url = "https:\/\/"+s;
+  mongo.connect (url, function (err, db)
+    {
+      var p = db.collection ('urls');
+      p.insert(retval, function(err, data) {
+      // handle error
+       if (err) console.log("Error in insert.");    
+      // other operations
+      db.close ();
+    });
+   console.log(JSON.stringify(retval));
+  });
+  res.end(JSON.stringify(retval));
+})
+
+app.get('/new/http\://:url', function(req, res) {
+  let retval = {};
+  let s = req.params.url;
+  retval.id = shortid.generate();
+  retval.original_url = "http:\/\/"+s;
   mongo.connect (url, function (err, db)
     {
       var p = db.collection ('urls');
@@ -33,7 +51,6 @@ app.get('/new/https?\://:url', function(req, res) {
 })
 
 app.get('/:shortner', function(req, res) {
-  console.log("redirect"+req.params.shortner);
   mongo.connect (url, function (err, db) {
     var p = db.collection ('urls'); 
     p.find ({},{}).toArray (function (err, docs) {
@@ -44,7 +61,6 @@ app.get('/:shortner', function(req, res) {
         let redirect_url=docs[0].original_url;
         console.log('sel:'+JSON.stringify(redirect_url));
         res.writeHead(301,{Location: redirect_url});
-  //      res.redirect(redirect_url);
       }
       else
         console.log('error: that token is not found');
@@ -54,6 +70,7 @@ app.get('/:shortner', function(req, res) {
   });
 });
 
+app.use('/', express.static(process.cwd() + '/public'));
 var port = process.env.PORT || 8080;
 app.listen(port, function() {
     console.log('Node.js listening on port ' + port + '...');
