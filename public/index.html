@@ -1,37 +1,49 @@
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 
 <html>
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Linux (vers 25 March 2009), see www.w3.org">
 
-	<head>
-		<title>URL shortner</title>
-		
-		<link href="/public/css/main.css" rel="stylesheet" type="text/css">
-	</head>
+  <title>URL shortner</title>
+  <link href="/public/css/main.css" rel="stylesheet" type=
+  "text/css">
+</head>
 
-	<header>
-		<p>Welcome, <span id="display-name"></span>!</p>
-		<a class="menu" href="/profile">Profile</a>
-		<p>|</p>
-		<a class="menu" href="/logout">Logout</a>
-	</header>
+<body>
+  <h2>URL Shortener Microservice</h2>
 
-	<body>
-	<h2>URL Shortener Microservice</h2>
-	<h4>Here are the specific user stories that are  implemented for this project:</h4>
-	<ul> Stories
-		<li>User Story: I can pass a URL as a parameter and I will receive a shortened URL in the JSON response.</li>
+  <h4>Here are the specific user stories that are implemented for
+  this project:</h4>
 
-		<li>User Story: If I pass an invalid URL that doesn't follow the valid http://www.example.com format, the JSON response will contain an error instead.</li>
+  <ul>
+    <li>User Story: I can pass a URL as a parameter and I will
+    receive a shortened URL in the JSON response.</li>
 
-		<li>User Story: When I visit that shortened URL, it will redirect me to my original link.</li>
-	</ul>
-	<br>
-	<ul> Examples:
-		<li> https://urlclipper-manley1971.c9users.io/new/https://www.google.com {"id":"41TXokhue","original_url":"https://www.google.com"} </li>
-		<li> https://urlclipper-manley1971.c9users.io/new/http://yahoo.com {"id":"VJv221ndg","original_url":"http://yahoo.com"} </li>
-		<li> https://urlclipper-manley1971.c9users.io/VJv221ndg (Yahoo.com page)</li>
-		<li> https://urlclipper-manley1971.c9users.io/41TXokhue (google.com page)</li>
-	</ul>
+    <li>User Story: If I pass an invalid URL that doesn't follow
+    the valid http://www.example.com format, the JSON response will
+    contain an error instead.</li>
+
+    <li>User Story: When I visit that shortened URL, it will
+    redirect me to my original link.</li>
+  </ul><br>
+
+  <h4>Here are some examples:</h4>
+
+  <ul>
+    <li>
+    https://urlclipper-manley1971.c9users.io/new/https://www.google.com
+    {"id":"41TXokhue","original_url":"https://www.google.com"}</li>
+
+    <li>
+    https://urlclipper-manley1971.c9users.io/new/http://yahoo.com
+    {"id":"VJv221ndg","original_url":"http://yahoo.com"}</li>
+
+    <li>https://urlclipper-manley1971.c9users.io/VJv221ndg
+    (Yahoo.com page)</li>
+
+    <li>https://urlclipper-manley1971.c9users.io/41TXokhue
+    (google.com page)</li>
+  </ul>
 </body>
-
 </html>
