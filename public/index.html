@@ -3,7 +3,7 @@
 <html>
 
 	<head>
-		<title>Clementine.js - The elegant and lightweight full stack JavaScript boilerplate.</title>
+		<title>URL shortner</title>
 		
 		<link href="/public/css/main.css" rel="stylesheet" type="text/css">
 	</head>
@@ -16,24 +16,22 @@
 	</header>
 
 	<body>
-		<div class="container">
-			<img src="/public/img/clementine_150.png" />
-			<br />
-			<p class="clementine-text">Clementine.js</p>
-		</div>
-	
-		<div class="container">
-			<p>You have clicked the button <span id="click-nbr"></span> times.</p>
-			<br />
-			<div class="btn-container">
-				<button type="submit" class="btn btn-add">CLICK ME!</button>
-				<button class="btn btn-delete">RESET</button>
-			</div>
-		</div>
-		
-		<script type="text/javascript" src="common/ajax-functions.js"></script>
-		<script type="text/javascript" src="controllers/clickController.client.js"></script>
-		<script type="text/javascript" src="controllers/userController.client.js"></script>
-	</body>
+	<h2>URL Shortener Microservice</h2>
+	<h4>Here are the specific user stories that are  implemented for this project:</h4>
+	<ul> Stories
+		<li>User Story: I can pass a URL as a parameter and I will receive a shortened URL in the JSON response.</li>
+
+		<li>User Story: If I pass an invalid URL that doesn't follow the valid http://www.example.com format, the JSON response will contain an error instead.</li>
+
+		<li>User Story: When I visit that shortened URL, it will redirect me to my original link.</li>
+	</ul>
+	<br>
+	<ul> Examples:
+		<li> https://urlclipper-manley1971.c9users.io/new/https://www.google.com {"id":"41TXokhue","original_url":"https://www.google.com"} </li>
+		<li> https://urlclipper-manley1971.c9users.io/new/http://yahoo.com {"id":"VJv221ndg","original_url":"http://yahoo.com"} </li>
+		<li> https://urlclipper-manley1971.c9users.io/VJv221ndg (Yahoo.com page)</li>
+		<li> https://urlclipper-manley1971.c9users.io/41TXokhue (google.com page)</li>
+	</ul>
+</body>
 
 </html>
