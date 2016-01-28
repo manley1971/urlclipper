@@ -1,5 +1,5 @@
 'use strict';
-var shortid = require('shortid');
+//var shortid = require('shortid');
 
 var express = require('express');
 var routes = require('./app/routes/index.js');
@@ -7,6 +7,7 @@ var passport = require('passport');
 var session = require('express-session');
 var mongo = require('mongodb');
 var app = express();
+var shortid = "a";
 require('dotenv').load();
 
 var url = 'mongodb://localhost:27017/';
@@ -15,7 +16,8 @@ app.use('/public', express.static(process.cwd() + '/public'));
 app.get('/new/https\://:url', function(req, res) {
     let retval = {};
     let s = req.params.url;
-    retval.id = shortid.generate();
+    retval.id = shortid;
+    shortid=shortid+"a";
     retval.original_url = "https:\/\/" + s;
     mongo.connect(url, function(err, db) {
         var p = db.collection('urls');
@@ -32,7 +34,8 @@ app.get('/new/https\://:url', function(req, res) {
 app.get('/new/http\://:url', function(req, res) {
     let retval = {};
     let s = req.params.url;
-    retval.id = shortid.generate();
+    retval.id = shortid;
+    shortid+='b';
     retval.original_url = "http:\/\/" + s;
     mongo.connect(url, function(err, db) {
         var p = db.collection('urls');
