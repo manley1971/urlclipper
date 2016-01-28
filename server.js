@@ -38,7 +38,7 @@ app.get('/new/http\://:url', function(req, res) {
         var p = db.collection('urls');
         p.insert(retval, function(err, data) {
             // handle error
-            if (err) console.log("Error in database insert.");
+            if (err) console.log("Error in database insert for an http request.");
             // other operations
             db.close();
         });
