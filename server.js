@@ -1,4 +1,5 @@
 'use strict';
+//the shortid module is not liked by heroku
 //var shortid = require('shortid');
 
 var express = require('express');
