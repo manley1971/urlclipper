@@ -4,7 +4,6 @@
 
 var express = require('express');
 var routes = require('./app/routes/index.js');
-var passport = require('passport');
 var session = require('express-session');
 var mongo = require('mongodb');
 var app = express();
@@ -14,12 +13,14 @@ require('dotenv').load();
 var url = 'mongodb://localhost:27017/';
 app.use('/public', express.static(process.cwd() + '/public'));
 
-app.get('/new/https\://:url', function(req, res) {
+app.get('/new/https?\://:url', function(req, res) {
+//    console.log(req);
     let retval = {};
     let s = req.params.url;
     retval.id = shortid;
     shortid=shortid+"a";
-    retval.original_url = "https:\/\/" + s;
+ //   retval.original_url = "https:\/\/" + s;
+    retval.original_url = req.url.split("new/")[1];
     mongo.connect(url, function(err, db) {
         var p = db.collection('urls');
         p.insert(retval, function(err, data) {
@@ -31,25 +32,6 @@ app.get('/new/https\://:url', function(req, res) {
     });
     res.end(JSON.stringify(retval));
 })
-
-app.get('/new/http\://:url', function(req, res) {
-    let retval = {};
-    let s = req.params.url;
-    retval.id = shortid;
-    shortid+='b';
-    retval.original_url = "http:\/\/" + s;
-    mongo.connect(url, function(err, db) {
-        var p = db.collection('urls');
-        p.insert(retval, function(err, data) {
-            // handle error
-            if (err) console.log("Error in database insert for an http request.");
-            // other operations
-            db.close();
-        });
-    });
-    res.end(JSON.stringify(retval));
-})
-
 app.get('/new/*', function(req, res) {
     let retval = {
         "error": "URL invalid"
@@ -72,7 +54,7 @@ app.get('/:shortner', function(req, res) {
                     Location: redirect_url
                 });
             } else {
-                console.log('error: that token is not found');
+                console.log('Token is not found');
                 let retval = {
                     "error": "No short url for given input"
                 };
