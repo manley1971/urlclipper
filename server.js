@@ -22,6 +22,7 @@ app.get('/new/https?\://:url', function(req, res) {
     shortid=shortid+"a";
     retval.original_url = req.url.split("new/")[1];
     mongo.connect(url, function(err, db) {
+    //if for some reason we did not connect to the db we don't want to crash.
       if (!db) {
           console.log("********no db**********");
 	  res.end("mongo is not running");
