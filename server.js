@@ -7,7 +7,7 @@ var express = require('express');
 var routes = require('./app/routes/index.js');
 var session = require('express-session');
 var app = express();
-var shortid = "b";
+var shortid = "c";
 require('dotenv').load();
 
 app.use('/public', express.static(process.cwd() + '/public'));
@@ -77,7 +77,7 @@ app.get('/:shortner', function(req, res) {
     if (q) 
       q.exec(function(err, data) {
         if (err) res.end("probably the sites were about cats anyway, but there was an error looking it up..");
-        if (data) {
+        if (data && data.length) {
           console.log("found in database, time to relocate to: "+data[0].original_url);
           res.writeHead(301, {
                     Location: data[0].original_url
