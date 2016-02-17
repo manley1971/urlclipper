@@ -1,13 +1,11 @@
 'use strict';
-//the shortid module is not liked by heroku
-//var shortid = require('shortid');
+var shortId = require('shortid');
 var mongoose = require('mongoose');
 
 var express = require('express');
 var routes = require('./app/routes/index.js');
 var session = require('express-session');
 var app = express();
-var shortid = "c";
 require('dotenv').load();
 
 app.use('/public', express.static(process.cwd() + '/public'));
@@ -21,6 +19,14 @@ var SiteSchema = new mongoose.Schema({
     original_url: String,
 });
 let sModel = mongoose.model('SiteList', SiteSchema);
+//uncomment this if we want to start the db fresh:
+sModel.remove({}, function(err) {
+            if (err) {
+                console.log("remove had an error: "+err)
+            } else {
+                console.log("removed db");
+            }
+});
 
 //Is this a url to add to our collection?
 app.get('/new/https?\://:url', function(req, res) {
@@ -35,26 +41,25 @@ app.get('/new/https?\://:url', function(req, res) {
       q.exec(function(err, data) {
         if (err) res.end("probably the sites were about cats anyway, but there was an error looking it up..");
         if (data&&data.length) {
-          retval.short_id = data;
-          console.log("found:" + JSON.stringify(data));
+          retval.short_id = data[0].short_url;
+          console.log("found:" + JSON.stringify(retval.short_id));
           res.end(JSON.stringify(retval));
         }
         else {
           console.log("not found:" + JSON.stringify(data));
-          retval.short_id = shortid;
+          //shortid+="A"
+          retval.short_id = shortId.generate();
           retval.comment="this service is something like a bookmark";
           res.end(JSON.stringify(retval));
           let newSearch = new sModel({
             original_url:retval.original_url,
-            short_url:shortid
+            short_url:retval.short_id
           });
           newSearch.save();
-          shortid=shortid+"a";
         }
       });
     else 
       res.end(JSON.stringify("error: query is null, mongo is maybe down"));
-
 });
 
 // or is this obviously poorly formed
@@ -85,7 +90,7 @@ app.get('/:shortner', function(req, res) {
           res.end();
         } else {
           console.log('Token is not found');
-          let retval = {"error": "No short url for given input"};
+          let retval = {"error": "No url for given input"};
           res.end(JSON.stringify(retval));
         }
     });
